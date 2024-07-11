@@ -6,7 +6,7 @@ type EditorType = {
 export function Editor({ value, setValue }: EditorType) {
   return (
     <textarea
-      className={`overflow-x-scroll no-scrollbar grow`}
+      className="no-scrollbar grow border-2 border-zinc-600 p-1"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />

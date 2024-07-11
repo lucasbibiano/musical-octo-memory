@@ -19,19 +19,22 @@ export function changeKey(key: string, steps: number): string {
   return result;
 }
 
-export function useEncodedParams() {
+export function useEncodedParams(paramName: string) {
   const [result, setResult] = useState("");
 
   const { search } = window.location;
   const params = new URLSearchParams(search);
-  const value = params.get("data") || "";
+  const value = params.get(paramName) || "";
 
   const setEncodedParam = (data: string) => {
     setResult(data);
-    
+
     compressAndEncode(data).then((encoded) => {
-      const encodedParams = data ? `?data=${encoded}` : "";
-      window.history.pushState({}, "", encodedParams);
+      if (encoded && typeof window !== "undefined") {
+        const url = new URL(window.location.href);
+        url.searchParams.set(paramName, encoded);
+        history.pushState(null, "", url);
+      }
     });
   };
 

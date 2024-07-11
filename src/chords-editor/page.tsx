@@ -7,18 +7,25 @@ import { useEncodedParams } from "../lib/utils";
 
 export function Page() {
   const [isEditMode, setIsEditMode] = useState(false);
-  const { result, setEncodedParam } = useEncodedParams();
+  const { result: songChords, setEncodedParam: setSongChords } =
+    useEncodedParams("c");
+  const { result: songName, setEncodedParam: setSongName } =
+    useEncodedParams("n");
 
   return (
     <SongDetailsConfigProvider
-      rawSong={result}
-      onChange={(data) => setEncodedParam(data)}
+      rawSong={songChords}
+      onChange={(data) => setSongChords(data)}
     >
       <div className="flex flex-col py-2 px-4 md:py-4 md:px-8 min-h-screen">
-        <Header />
+        <Header
+          isEditMode={isEditMode}
+          songName={songName}
+          onChangeSongName={(newName) => setSongName(newName)}
+        />
 
         {isEditMode ? (
-          <Editor value={result} setValue={(data) => setEncodedParam(data)} />
+          <Editor value={songChords} setValue={(data) => setSongChords(data)} />
         ) : (
           <Renderer />
         )}
