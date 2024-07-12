@@ -91,7 +91,7 @@ export function parseChordsLine(
       meta === "intro" && chordIndex !== 0 ? 2 : 0,
       lyricsToAdd.length - lastChord.length
     );
-    chords += " ".repeat(spacesToAdd) + chord;
+    chords += " ".repeat(spacesToAdd) + chord + " ";
 
     chordIndex = nextBracketEnd + 1;
     nextBracket = line.indexOf("[", chordIndex);
