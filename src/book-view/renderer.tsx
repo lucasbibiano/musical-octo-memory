@@ -40,10 +40,9 @@ export function Renderer({ entries }: { entries: string[] }) {
     <>
       {decodedEntries.map((entry) => {
         return (
-          <div
-            className="border-t-4 border-gray-800 print:min-h-screen"
-            key={entry.name}
-          >
+          <div key={entry.name} className="print:min-h-screen">
+            <div className="border-t-4 border-gray-800 p-4 print:hidden"></div>
+
             <SongDetailsConfigProvider
               rawSong={entry.chords}
               onChange={(chords) => {
@@ -58,6 +57,7 @@ export function Renderer({ entries }: { entries: string[] }) {
                 );
               }}
             >
+              <h1 className="font-bold text-2xl text-center">{entry.name}</h1>
               <SongRenderer />
             </SongDetailsConfigProvider>
           </div>
