@@ -5,7 +5,7 @@ import { parseChordsLine } from "../lib/song-parser";
 import "./renderer.css";
 
 export function Renderer() {
-  const { songData, fontSizeClass, columnsClass } = useContext(
+  const { songData, fontSizeClass, columnsClass, lyricsOnly } = useContext(
     SongDetailsConfigContext
   );
 
@@ -15,7 +15,7 @@ export function Renderer() {
 
   return (
     <div className="font-mono no-scrollbar grow">
-      {intro
+      {intro && !lyricsOnly
         ? chords.slice(intro.start, intro.end + 1).map((line) => {
             const parsedLine = parseChordsLine(line, intro.meta);
 
@@ -53,12 +53,13 @@ export function Renderer() {
                       key={part.start + " - " + index}
                       className={`whitespace-nowrap`}
                     >
-                      <p className="leading-4 mb-2">
-                        {part.meta === "intro" ? <span>Intro: </span> : null}
-                        <span className="font-bold whitespace-pre">
-                          {parsedLine.chords}
-                        </span>
-                      </p>
+                      {!lyricsOnly ? (
+                        <p className="leading-4 mb-2">
+                          <span className="font-bold whitespace-pre">
+                            {parsedLine.chords}
+                          </span>
+                        </p>
+                      ) : null}
                       <p
                         className={`leading-4 mb-4 ${
                           part.meta === "chorus" ? "italic" : null

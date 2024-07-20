@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { changeChordsKey, parseSongChords } from "../lib/song-parser";
 
 export type SongData = {
@@ -20,6 +20,8 @@ export const SongDetailsConfigContext = createContext<{
   decreaseColumns: () => void;
   keyUp: () => void;
   keyDown: () => void;
+  lyricsOnly: boolean;
+  setLyricsOnly: Dispatch<SetStateAction<boolean>>;
 }>({
   songData: { chords: [], meta: [] },
   fontSizeClass: "text-base",
@@ -30,6 +32,8 @@ export const SongDetailsConfigContext = createContext<{
   decreaseColumns: () => {},
   keyUp: () => {},
   keyDown: () => {},
+  lyricsOnly: false,
+  setLyricsOnly: () => {},
 });
 
 const POSSIBLE_FONT_SIZES = [
@@ -63,6 +67,8 @@ export default function SongDetailsConfigProvider({
 
   const [fontSize, setFontSize] = useState(2);
   const [columns, setColumns] = useState(1);
+
+  const [lyricsOnly, setLyricsOnly] = useState(false);
 
   const fontSizeClass = "text-" + POSSIBLE_FONT_SIZES[fontSize];
   const columnsClass = "columns-" + columns;
@@ -100,6 +106,8 @@ export default function SongDetailsConfigProvider({
         decreaseColumns,
         keyUp,
         keyDown,
+        lyricsOnly,
+        setLyricsOnly,
       }}
     >
       {children}

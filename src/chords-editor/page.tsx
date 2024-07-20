@@ -1,10 +1,10 @@
 import SongDetailsConfigProvider from "./context";
-import Header from "./header";
 import { Renderer } from "./renderer";
 import { Editor } from "./editor";
 import { useEffect, useState } from "react";
 import { useEncodedParams } from "../lib/utils";
 import { useDebounce } from "@uidotdev/usehooks";
+import Actions from "./actions";
 
 export function Page() {
   const { result: songChordsParam, setEncodedParam: setSongChordsParam } =
@@ -37,29 +37,26 @@ export function Page() {
       rawSong={songChords}
       onChange={(data) => setSongChords(data)}
     >
+      <Actions isEditMode={isEditMode} setEditMode={setIsEditMode} />
+
       <div className="flex flex-col py-2 px-4 md:py-4 md:px-8 min-h-screen">
-        <Header
-          isEditMode={isEditMode}
-          songName={songName}
-          onChangeSongName={(newName) => setSongName(newName)}
-        />
+        <div className="mb-4">
+          {isEditMode ? (
+            <input
+              className="border-2 border-zinc-600 p-1 w-full"
+              value={songName}
+              onChange={(e) => setSongName(e.target.value)}
+            />
+          ) : (
+            <h1 className="font-bold text-2xl">{songName}</h1>
+          )}
+        </div>
 
         {isEditMode ? (
           <Editor value={songChords} setValue={(data) => setSongChords(data)} />
         ) : (
           <Renderer />
         )}
-
-        <button
-          className="fixed bottom-4 right-4 p-4 rounded-full bg-blue-600 text-white print:hidden"
-          onClick={() => setIsEditMode((actual) => !actual)}
-        >
-          {isEditMode ? (
-            <i className={`bx bx-notepad bx-sm`}></i>
-          ) : (
-            <i className={`bx bx-edit-alt bx-sm`}></i>
-          )}
-        </button>
       </div>
     </SongDetailsConfigProvider>
   );

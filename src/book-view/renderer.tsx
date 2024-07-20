@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SongDetailsConfigProvider from "../chords-editor/context";
-import Header from "../chords-editor/header";
 
 import { Renderer as SongRenderer } from "../chords-editor/renderer";
 import { decompressAndDecode } from "../lib/compressor";
@@ -41,7 +40,10 @@ export function Renderer({ entries }: { entries: string[] }) {
     <>
       {decodedEntries.map((entry) => {
         return (
-          <div className="min-h-screen" key={entry.name}>
+          <div
+            className="border-t-4 border-gray-800 print:min-h-screen"
+            key={entry.name}
+          >
             <SongDetailsConfigProvider
               rawSong={entry.chords}
               onChange={(chords) => {
@@ -56,11 +58,6 @@ export function Renderer({ entries }: { entries: string[] }) {
                 );
               }}
             >
-              <Header
-                isEditMode={false}
-                songName={entry.name}
-                onChangeSongName={() => {}}
-              />
               <SongRenderer />
             </SongDetailsConfigProvider>
           </div>
