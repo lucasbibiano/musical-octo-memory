@@ -34,46 +34,44 @@ export function Renderer() {
         : null}
 
       <div className={`${columnsClass} ${fontSizeClass}`}>
-        {meta.map((part) =>
-          part.meta !== "intro" ? (
-            <div
-              key={part.start + " - " + part.end}
-              className="w-full break-inside-avoid-column mb-8"
-            >
-              <div>
-                {part.meta === "bridge" ? (
-                  <div className="mb-2 italic">Ponte: </div>
-                ) : null}
+        {meta.map((part) => (
+          <div
+            key={part.start + " - " + part.end}
+            className="w-full break-inside-avoid-column mb-8"
+          >
+            <div>
+              {part.meta === "bridge" && !lyricsOnly ? (
+                <div className="mb-2 italic">Ponte: </div>
+              ) : null}
 
-                {chords.slice(part.start, part.end + 1).map((line, index) => {
-                  const parsedLine = parseChordsLine(line, part.meta);
+              {chords.slice(part.start, part.end + 1).map((line, index) => {
+                const parsedLine = parseChordsLine(line, part.meta);
 
-                  return (
-                    <div
-                      key={part.start + " - " + index}
-                      className={`whitespace-nowrap`}
-                    >
-                      {!lyricsOnly ? (
-                        <p className="leading-4 mb-2">
-                          <span className="font-bold whitespace-pre">
-                            {parsedLine.chords}
-                          </span>
-                        </p>
-                      ) : null}
-                      <p
-                        className={`leading-4 mb-4 ${
-                          part.meta === "chorus" ? "italic" : null
-                        }`}
-                      >
-                        {parsedLine.lyrics}
+                return (
+                  <div
+                    key={part.start + " - " + index}
+                    className={`whitespace-nowrap`}
+                  >
+                    {!lyricsOnly ? (
+                      <p className="leading-4 mb-2">
+                        <span className="font-bold whitespace-pre">
+                          {parsedLine.chords}
+                        </span>
                       </p>
-                    </div>
-                  );
-                })}
-              </div>
+                    ) : null}
+                    <p
+                      className={`leading-4 mb-4 ${
+                        part.meta === "chorus" ? "italic" : null
+                      }`}
+                    >
+                      {parsedLine.lyrics}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-          ) : null
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
