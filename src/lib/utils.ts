@@ -33,6 +33,7 @@ export function useEncodedParams(paramName: string) {
       if (encoded && typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.searchParams.set(paramName, encoded);
+        console.log("pushing url", url);
         history.pushState(null, "", url);
       }
     });

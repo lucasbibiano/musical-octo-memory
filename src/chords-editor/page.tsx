@@ -21,7 +21,7 @@ export function Page() {
   const debouncedSongNameParamChange = useDebounce(songName, 500);
 
   useEffect(() => {
-    if (songChordsParam !== debouncedSongChordParamChange) {
+    if (songChords !== debouncedSongChordParamChange) {
       console.log(
         "debouncedSongChordParamChange",
         debouncedSongChordParamChange
@@ -29,15 +29,15 @@ export function Page() {
       setSongChordsParam(debouncedSongChordParamChange);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSongChordParamChange, songChordsParam]);
+  }, [debouncedSongChordParamChange, songChords]);
 
   useEffect(() => {
-    if (songNameParam !== debouncedSongNameParamChange) {
+    if (songName !== debouncedSongNameParamChange) {
       console.log("debouncedSongNameParamChange", debouncedSongNameParamChange);
       setSongNameParam(debouncedSongNameParamChange);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSongNameParamChange, songNameParam]);
+  }, [debouncedSongNameParamChange, songName]);
 
   useEffect(() => {
     if (songChordsParam || songNameParam) {
