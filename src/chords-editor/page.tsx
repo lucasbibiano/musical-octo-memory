@@ -32,7 +32,7 @@ export function Page() {
       setSongNameParam(debouncedSongNameParamChange);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSongNameParamChange]);
+  }, [debouncedSongNameParamChange, songNameParam]);
 
   useEffect(() => {
     if (songChordsParam || songNameParam) {
