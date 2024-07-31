@@ -3,8 +3,8 @@ import { Renderer } from "./renderer";
 import { Editor } from "./editor";
 import { useEffect, useState } from "react";
 import { useEncodedParams } from "../lib/utils";
-import { useDebounce } from "@uidotdev/usehooks";
 import Actions from "./actions";
+import { useDebouncedCallback } from "use-debounce";
 
 export function Page() {
   const { result: songChordsParam, setEncodedParam: setSongChordsParam } =
@@ -17,27 +17,19 @@ export function Page() {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const debouncedSongChordParamChange = useDebounce(songChords, 500);
-  const debouncedSongNameParamChange = useDebounce(songName, 500);
+  const debouncedSetUrl = useDebouncedCallback(({ songChords, songName }) => {
+    if (songChords !== songChordsParam) {
+      setSongChordsParam(songChords);
+    }
+
+    if (songName !== songNameParam) {
+      setSongNameParam(songName);
+    }
+  }, 500);
 
   useEffect(() => {
-    if (songChords !== debouncedSongChordParamChange) {
-      console.log(
-        "debouncedSongChordParamChange",
-        debouncedSongChordParamChange
-      );
-      setSongChordsParam(debouncedSongChordParamChange);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSongChordParamChange, songChords]);
-
-  useEffect(() => {
-    if (songName !== debouncedSongNameParamChange) {
-      console.log("debouncedSongNameParamChange", debouncedSongNameParamChange);
-      setSongNameParam(debouncedSongNameParamChange);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSongNameParamChange, songName]);
+    debouncedSetUrl({ songChords, songName });
+  }, [debouncedSetUrl, songChords, songName]);
 
   useEffect(() => {
     if (songChordsParam || songNameParam) {

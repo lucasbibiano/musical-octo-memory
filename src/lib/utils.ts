@@ -27,21 +27,14 @@ export function useEncodedParams(paramName: string) {
   const value = params.get(paramName) || "";
 
   const setEncodedParam = (data: string) => {
-    if (!data) {
-      return;
-    }
-
     setResult(data);
 
     compressAndEncode(data).then((encoded) => {
       if (encoded && typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.searchParams.set(paramName, encoded);
-
-        if (url.href !== window.location.href) {
-          console.log("pushState", url);
-          history.pushState(null, "", url);
-        }
+        history.pushState(null, "", url);
+        console.log("URL updated");
       }
     });
   };
