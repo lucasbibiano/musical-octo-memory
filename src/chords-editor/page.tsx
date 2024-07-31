@@ -17,17 +17,22 @@ export function Page() {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const debouncedParamsChange = useDebounce({ songChords, songName }, 500);
+  const debouncedSongChordParamChange = useDebounce(songChords, 500);
+  const debouncedSongNameParamChange = useDebounce(songName, 500);
 
   useEffect(() => {
-    console.log({ songChordsParam, songNameParam });
-
-    console.log({ window: window.location.href });
-
-    setSongChordsParam(debouncedParamsChange.songChords);
-    setSongNameParam(debouncedParamsChange.songName);
+    if (songChordsParam !== debouncedSongChordParamChange) {
+      setSongChordsParam(debouncedSongChordParamChange);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedParamsChange]);
+  }, [debouncedSongChordParamChange, songChordsParam]);
+
+  useEffect(() => {
+    if (songNameParam !== debouncedSongNameParamChange) {
+      setSongNameParam(debouncedSongNameParamChange);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSongNameParamChange]);
 
   useEffect(() => {
     if (songChordsParam || songNameParam) {
