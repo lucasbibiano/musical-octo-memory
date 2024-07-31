@@ -28,21 +28,10 @@ export function Page() {
   }, 500);
 
   useEffect(() => {
-    console.log("iframed 1", window.self !== window.top);
-    console.log("iframed 2", document.referrer);
-
-    function isCrossOriginFrame() {
-      try {
-        return !window?.top?.location.hostname;
-      } catch (e) {
-        return true;
-      }
+    if (window.self !== window.top) {
+      return;
     }
 
-    console.log("iframed 3", isCrossOriginFrame());
-  }, []);
-
-  useEffect(() => {
     debouncedSetUrl({ songChords, songName });
   }, [debouncedSetUrl, songChords, songName]);
 
