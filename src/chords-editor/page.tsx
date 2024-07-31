@@ -28,7 +28,18 @@ export function Page() {
   }, 500);
 
   useEffect(() => {
-    console.log(window.parent.location.href);
+    console.log("iframed 1", window.self !== window.top);
+    console.log("iframed 2", document.referrer);
+
+    function isCrossOriginFrame() {
+      try {
+        return !window?.top?.location.hostname;
+      } catch (e) {
+        return true;
+      }
+    }
+
+    console.log("iframed 3", isCrossOriginFrame());
   }, []);
 
   useEffect(() => {
