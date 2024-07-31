@@ -22,6 +22,10 @@ export function Page() {
 
   useEffect(() => {
     if (songChordsParam !== debouncedSongChordParamChange) {
+      console.log(
+        "debouncedSongChordParamChange",
+        debouncedSongChordParamChange
+      );
       setSongChordsParam(debouncedSongChordParamChange);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,6 +33,7 @@ export function Page() {
 
   useEffect(() => {
     if (songNameParam !== debouncedSongNameParamChange) {
+      console.log("debouncedSongNameParamChange", debouncedSongNameParamChange);
       setSongNameParam(debouncedSongNameParamChange);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
