@@ -27,6 +27,10 @@ export function useEncodedParams(paramName: string) {
   const value = params.get(paramName) || "";
 
   const setEncodedParam = (data: string) => {
+    if (!data) {
+      return;
+    }
+
     setResult(data);
 
     compressAndEncode(data).then((encoded) => {
@@ -35,7 +39,7 @@ export function useEncodedParams(paramName: string) {
         url.searchParams.set(paramName, encoded);
 
         if (url.href !== window.location.href) {
-          console.log('pushState', url);
+          console.log("pushState", url);
           history.pushState(null, "", url);
         }
       }
