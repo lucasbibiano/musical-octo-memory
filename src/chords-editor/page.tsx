@@ -28,6 +28,10 @@ export function Page() {
   }, 500);
 
   useEffect(() => {
+    console.log(window.parent.location.href);
+  }, []);
+
+  useEffect(() => {
     debouncedSetUrl({ songChords, songName });
   }, [debouncedSetUrl, songChords, songName]);
 
