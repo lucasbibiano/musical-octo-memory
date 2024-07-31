@@ -3,6 +3,7 @@ import { Renderer } from "./renderer";
 import { Editor } from "./editor";
 import { useEffect, useState } from "react";
 import { useEncodedParams } from "../lib/utils";
+import { useDebounce } from "@uidotdev/usehooks";
 import Actions from "./actions";
 
 export function Page() {
@@ -15,6 +16,18 @@ export function Page() {
   const [songName, setSongName] = useState(songNameParam);
 
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const debouncedParamsChange = useDebounce({ songChords, songName }, 500);
+
+  useEffect(() => {
+    console.log({ songChordsParam, songNameParam });
+
+    console.log({ window: window.location.href });
+
+    setSongChordsParam(debouncedParamsChange.songChords);
+    setSongNameParam(debouncedParamsChange.songName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedParamsChange]);
 
   useEffect(() => {
     if (songChordsParam || songNameParam) {
